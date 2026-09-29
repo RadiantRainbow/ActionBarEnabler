@@ -1,7 +1,4 @@
-local addonName, ns = ...
-
 local frame = CreateFrame("Frame")
-frame:RegisterEvent("ADDON_LOADED")
 frame:RegisterEvent("PLAYER_LOGIN")
 
 local function CreateConfirmDialog()
@@ -24,7 +21,7 @@ local function CreateConfirmDialog()
     local text = dialog:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
     text:SetPoint("TOP", dialog, "TOP", 0, -20)
     text:SetWidth(280)
-    text:SetText("Enable action bars 2-6? This will reload your UI.")
+    text:SetText("Enable action bars 2-6?")
 
     local yes = CreateFrame("Button", nil, dialog, "UIPanelButtonTemplate")
     yes:SetSize(100, 22)
@@ -34,7 +31,12 @@ local function CreateConfirmDialog()
         SetActionBarToggles(true, true, true, true, true, false, false, false)
         ActionBarEnablerDB = true
         dialog:Hide()
-        ReloadUI()
+
+        if MultiActionBar_Update then
+            MultiActionBar_Update()
+        end
+
+        print("Action bars 2-6 enabled.")
     end)
 
     local no = CreateFrame("Button", nil, dialog, "UIPanelButtonTemplate")
@@ -50,13 +52,7 @@ local function CreateConfirmDialog()
     dialog:Show()
 end
 
-frame:SetScript("OnEvent", function(self, event, arg1)
-    if event == "ADDON_LOADED" and arg1 == addonName then
-        return
-    end
-
-    if event == "PLAYER_LOGIN" then
-        if ActionBarEnablerDB then return end
-        CreateConfirmDialog()
-    end
+frame:SetScript("OnEvent", function()
+    if ActionBarEnablerDB then return end
+    CreateConfirmDialog()
 end)
