@@ -8,6 +8,10 @@ local function CreateConfirmDialog()
     dialog:SetFrameStrata("FULLSCREEN_DIALOG")
     dialog:SetFrameLevel(100)
     dialog:EnableMouse(true)
+    dialog:SetMovable(true)
+    dialog:RegisterForDrag("LeftButton")
+    dialog:SetScript("OnDragStart", dialog.StartMoving)
+    dialog:SetScript("OnDragStop", dialog.StopMovingOrSizing)
 
     dialog:SetBackdrop({
         bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
@@ -56,3 +60,13 @@ frame:SetScript("OnEvent", function()
     if ActionBarEnablerDB then return end
     CreateConfirmDialog()
 end)
+
+SLASH_ACTIONBARENABLER1 = "/abe"
+SlashCmdList["ACTIONBARENABLER"] = function(msg)
+    if msg == "reset" then
+        ActionBarEnablerDB = nil
+        print("ActionBarEnabler: reset. The dialog will show on next login.")
+    else
+        print("ActionBarEnabler: /abe reset")
+    end
+end
