@@ -1,4 +1,4 @@
-## Interface: 11601
+## Interface: 16001
 ## Title: Action Bar Enabler
 ## Notes: Prompts once per character to enable action bars 2-6, then reloads the UI
 ## Version: 1.0

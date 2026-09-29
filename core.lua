@@ -1,4 +1,7 @@
+local addonName, ns = ...
+
 local frame = CreateFrame("Frame")
+frame:RegisterEvent("ADDON_LOADED")
 frame:RegisterEvent("PLAYER_LOGIN")
 
 local function CreateConfirmDialog()
@@ -31,7 +34,7 @@ local function CreateConfirmDialog()
         SetActionBarToggles(true, true, true, true, true, false, false, false)
         ActionBarEnablerDB = true
         dialog:Hide()
-        C_Timer.After(0, ReloadUI)
+        ReloadUI()
     end)
 
     local no = CreateFrame("Button", nil, dialog, "UIPanelButtonTemplate")
@@ -47,7 +50,13 @@ local function CreateConfirmDialog()
     dialog:Show()
 end
 
-frame:SetScript("OnEvent", function()
-    if ActionBarEnablerDB then return end
-    CreateConfirmDialog()
+frame:SetScript("OnEvent", function(self, event, arg1)
+    if event == "ADDON_LOADED" and arg1 == addonName then
+        return
+    end
+
+    if event == "PLAYER_LOGIN" then
+        if ActionBarEnablerDB then return end
+        CreateConfirmDialog()
+    end
 end)
