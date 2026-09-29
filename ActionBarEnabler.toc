@@ -1,0 +1,7 @@
+## Interface: 11601
+## Title: Action Bar Enabler
+## Notes: Prompts once to enable action bars 2-6, then reloads the UI
+## Version: 0.0.1
+## SavedVariables: ActionBarEnablerDB
+
+core.lua
