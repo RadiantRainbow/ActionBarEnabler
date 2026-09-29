@@ -31,7 +31,7 @@ local function CreateConfirmDialog()
         SetActionBarToggles(true, true, true, true, true, false, false, false)
         ActionBarEnablerDB = true
         dialog:Hide()
-        ReloadUI()
+        C_Timer.After(0, ReloadUI)
     end)
 
     local no = CreateFrame("Button", nil, dialog, "UIPanelButtonTemplate")
